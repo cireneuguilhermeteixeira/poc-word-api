@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Going to the market",
+        "description": "Going to the market",
+        "completed": false
+    },
+    {
+        "title": "Cooking lunch meal",
+        "description": "Cooking lunch meal",
+        "completed": false
+    },
+    {
+        "title": "Working on a website.",
+        "description": "Working on a website",
+        "completed": false
+    },
+    {
+        "title": "Watching an episode",
+        "description": "Watching an episode",
+        "completed": false
+    }
+]
