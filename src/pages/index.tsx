@@ -1,17 +1,27 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import fs from 'fs';
-import { join } from 'path';
-import Card from '../components/Card';
-import { Container, Grid } from '@mui/material';
+import {  Container, Typography } from '@mui/material';
 import Navbar from '../components/Navbar';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 
-const inter = Inter({ subsets: ['latin'] })
+export default function Home() {
 
-export default function Home({ todos } : {todos: Array<any>}) {
+  const [search, setSearch] = useState('');
+  const router = useRouter();
+
+
+
+
+  useEffect(() => {
+    if (search) {
+      router.push(`/${search}`);
+    }
+
+
+  }, [search])
+
+
   return (
     <div>
       <Head>
@@ -19,33 +29,22 @@ export default function Home({ todos } : {todos: Array<any>}) {
         <meta name="description" content="Todos app with Material UI" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <Container>
-        {
-          todos.length > 0 ? (
-            todos.map((todo, index) => (
-              <Grid key={index} marginBottom={4} marginTop={4}>
-                <Card todo={todo} key={index} />
-              </Grid>
-            ))
-          ) : (
-            <p>
-              No saved todos yet!!
-            </p>
-          )
-        }
+
+      <Navbar setSearch={setSearch} />
+
+      <Container sx={{
+        minHeight: '60rem'
+      }}>
+
+        <Typography sx={{
+          padding: 10,
+          fontFamily: 'Helvetica'
+        }}>
+          Type your word above!!
+        </Typography>
+
       </Container>
+
     </div>
   )
-}
-
-export async function getServerSideProps() {
-  // get all the todos.
-  let todos_path = join(__dirname, '..', '..', '..', 'data', 'todos.json');
-  let todos = await fs.promises.readFile(todos_path, 'utf8');
-  return {
-    props: {
-      "todos": JSON.parse(todos)
-    }
-  }
 }
